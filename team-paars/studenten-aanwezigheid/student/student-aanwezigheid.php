@@ -21,13 +21,13 @@ if (isset($_SESSION['gebruiker_id']) && isset ($_SESSION['user_name'])){
     </label>
     <div class="sidebar">
       <header>Student</header>
-      <a href="student-dashboard.php" class="active">
+      <a href="student-dashboard.php">
         <i class="fas fa-qrcode"></i>
         <span>Dashboard</span>
       </a>
-      <a href="student-aanwezigheid.php">
+      <a href="student-aanwezigheid.php" class="active">
         <i class="fas fa-chalkboard-teacher" ></i>
-        <span>Aanwezigheid</span>
+        <span>aanwezigheid</span>
       </a>
       <a href="../login/logout.php">
         <i class="fas fa-sign-out-alt"></i>
