@@ -1,0 +1,102 @@
+body {
+    background: #4eef71;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+* {
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+form {
+    width: 35%;
+    margin: 0 auto;
+    background-color: #ffedb4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(178, 39, 39, 0.1);
+}
+
+@media screen and (max-width: 1100px) {
+    form {
+        width: 70%;
+    }
+}
+
+.logo-container {
+    text-align: center; /* Center the image */
+    margin-bottom: 20px; /* Space below the image */
+}
+
+.logo {
+    width: 50%; /* This will make the image take up 50% of its container */
+    max-width: 640px; /* Set a maximum width to control the size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+input {
+    display: block;
+    border: 2px solid #ccc;
+    width: 95%;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+label {
+    color: #000000; /* Fixed color code */
+    font-size: 18px;
+    padding: 10px;
+}
+
+button {
+    float: right;
+    background: #baffc9;
+    padding: 10px 15px;
+    color: #000000;
+    border-radius: 5px;
+    margin-right: 10px;
+    border: none;
+}
+
+button:hover {
+    background-color: #ffdfba;
+}
+
+.error {
+    background: #f2dede;
+    color: #a94442;
+    padding: 10px;
+    width: 95%;
+    border-radius: 5px;
+    margin: 20px auto;
+}
+
+.success {
+    background: #baffc9;
+    color: #1d7632;
+    padding: 10px;
+    width: 95%;
+    border-radius: 5px;
+    margin: 20px auto;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+}
+
+.ca {
+    font-size: 14px;
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+    color: #444;
+}
+
+.ca:hover {
+    text-decoration: underline;
+}
