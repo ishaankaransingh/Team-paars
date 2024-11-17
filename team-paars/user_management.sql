@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2024 at 06:03 PM
+-- Generation Time: Nov 17, 2024 at 11:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `tgebruiker` (
   `gebruiker_id` int(11) NOT NULL,
   `user_name` varchar(50) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(100) NOT NULL,
   `role` enum('admin','student','docent') NOT NULL
@@ -39,10 +40,10 @@ CREATE TABLE `tgebruiker` (
 -- Dumping data for table `tgebruiker`
 --
 
-INSERT INTO `tgebruiker` (`gebruiker_id`, `user_name`, `password`, `name`, `role`) VALUES
-(1, 'admin', 'admin', 'admin', 'admin'),
-(4, 'shawn', 'shawn', 'shawn', 'student'),
-(5, 'docent', 'docent', 'docent', 'docent');
+INSERT INTO `tgebruiker` (`gebruiker_id`, `user_name`, `email`, `password`, `name`, `role`) VALUES
+(1, 'admin', 'admin@gmail.com', 'admin', 'admin', 'admin'),
+(4, 'shawn', 'shawn@gmail.com', 'shawn', 'shawn', 'student'),
+(5, 'docent', 'docent@gmail.com', 'docent', 'docent', 'docent');
 
 --
 -- Indexes for dumped tables
