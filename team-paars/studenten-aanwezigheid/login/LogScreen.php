@@ -15,7 +15,7 @@
             <p class="error"><?php echo $_GET['error']; ?></p>
         <?php } ?>
         
-        <label>User Name of Email</label>
+        <label>Username of Email</label>
         <input type="text" name="username" placeholder="Username of email" required><br>
 
         <label>Password</label>
