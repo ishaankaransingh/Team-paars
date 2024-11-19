@@ -43,11 +43,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
                 exit();
             } else {
-                header("Location: LogScreen.php?error=Incorrect User Name or Password");// geeft een error 
+                header("Location: LogScreen.php?error=Incorrect User Name or Password");
                 exit();
             }
         } else {
-            header("Location: LogScreen.php?error=Incorrect User Name or Password");// geeft een inlog error
+            header("Location: LogScreen.php?error=Incorrect User Name or Password");
             exit();
         }
     }

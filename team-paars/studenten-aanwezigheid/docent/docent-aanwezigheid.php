@@ -3,9 +3,10 @@
 session_start();
 
 if (isset($_SESSION['gebruiker_id']) && isset ($_SESSION['user_name'])){
-  $activePage = 'dashboard';
-include ('../includes/admin-nav.php') 
+  $activePage = 'aanwezigheid';
+include ('../includes/docent-nav.php') 
 ?>
+
 
     <script>
       // Check the state of the checkbox from localStorage when the page loads
