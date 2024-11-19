@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "user_management";
+$dbname = "aanwezigheids_db";
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 

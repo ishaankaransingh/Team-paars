@@ -20,8 +20,12 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         header("Location: LogScreen.php?error=Password is required");
         exit();
     } else {
-        // Update the SQL query to check both username and email
-        $sql = "SELECT * FROM tgebruiker WHERE (user_name = '$usernameOrEmail' OR email = '$usernameOrEmail') AND password = '$password'";
+        // Update the SQL query to check both username and email and join with rollen
+        $sql = "SELECT t.*, r.role 
+                FROM tgebruiker t 
+                JOIN rollen r ON t.role_id = r.role_id 
+                WHERE (t.user_name = '$usernameOrEmail' OR t.email = '$usernameOrEmail') 
+                AND t.password = '$password'";
 
         $result = mysqli_query($conn, $sql);
 
@@ -33,6 +37,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 $_SESSION['gebruiker_id'] = $row['gebruiker_id'];
                 $_SESSION['role'] = $row['role']; // Adding the role to the session
 
+                // Redirect based on role
                 if ($row['role'] === 'admin') {
                     header("Location: ../admin/admin-dashboard.php"); // Redirect to admin page
                 } else if ($row['role'] === 'student') {
