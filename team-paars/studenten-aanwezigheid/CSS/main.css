@@ -1,0 +1,22 @@
+/* styles.css */
+
+body, html {
+    height: 100%; /* Full height */
+    margin: 0; /* Remove default margin */
+}
+
+.container {
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+}
+
+.centered-div {
+    width: 300px; /* Set a width */
+    height: 200px; /* Set a height */
+    background-color: lightblue; /* Just for visibility */
+    text-align: center; /* Center text inside the div */
+    padding: 20px; /* Add some padding */
+    border: 1px solid #000; /* Optional: add a border for visibility */
+}

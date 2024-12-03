@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-  <title>Admin</title>
+  <title>Directeur</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../CSS/navbar.css" >
     <link rel="stylesheet" href="../CSS/main.css" >
@@ -15,26 +15,10 @@
       <i class="fas fa-times" id="cancel"></i>
     </label>
     <div class="sidebar">
-  <header>Admin Menu</header>
+  <header>Directeur</header>
   <a href="admin-dashboard.php" class="<?= ($activePage == 'dashboard') ? 'active' : ''; ?>">
     <i class="fas fa-qrcode"></i>
     <span>Dashboard</span>
-  </a>
-  <!--<a href="admin-docenten.php" class="<?= ($activePage == 'docenten') ? 'active' : ''; ?>">
-    <i class="fas fa-chalkboard-teacher"></i>
-    <span>Docenten</span>
-  </a>
-  <a href="admin-studenten.php" class="<?= ($activePage == 'studenten') ? 'active' : ''; ?>">
-    <i class="fas fa-user-graduate"></i>
-    <span>Studenten</span>
-  </a>
-  <a href="admin-klassen.php" class="<?= ($activePage == 'klassen') ? 'active' : ''; ?>">
-    <i class="fas fa-chalkboard"></i>
-    <span>Klassen</span>
-  </a>
-  <a href="admin-vakken.php" class="<?= ($activePage == 'vakken') ? 'active' : ''; ?>">
-    <i class="fas fa-book"></i>
-    <span>Vakken</span>-->
   </a>
   <a href="../login/logout.php">
     <i class="fas fa-sign-out-alt"></i>

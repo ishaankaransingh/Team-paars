@@ -20,7 +20,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         header("Location: LogScreen.php?error=Password is required");
         exit();
     } else {
-        // Update the SQL query to check both username and email and join with rollen
+        //sql query om de gebruikers tabel met de rollen tabel te joinen
         $sql = "SELECT t.*, r.role 
                 FROM tgebruiker t 
                 JOIN rollen r ON t.role_id = r.role_id 
@@ -39,11 +39,19 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
                 // Redirect based on role
                 if ($row['role'] === 'admin') {
-                    header("Location: ../admin/admin-dashboard.php"); // Redirect to admin page
+                    header("Location: ../admin/admin-dashboard.php"); // ...................Redirect to admin page
                 } else if ($row['role'] === 'student') {
-                    header("Location: ../student/student-dashboard.php"); // Redirect to student page
+                    header("Location: ../student/student-dashboard.php"); // ...............Redirect to student page
                 } else if ($row['role'] === 'docent') {
-                    header("Location: ../docent/docent-dashboard.php"); // Redirect to docent page
+                    header("Location: ../docent/docent-dashboard.php"); // .................Redirect to docent page
+                } else if ($row['role'] === 'od') {
+                    header("Location: ../od/od-dashboard.php"); // .........................Redirect to od page
+                } else if ($row['role'] === 'rc') {
+                    header("Location: ../rc/rc-dashboard.php"); // .........................Redirect to rc page
+                } else if ($row['role'] === 'directeur') {
+                    header("Location: ../directeur/directeur-dashboard.php"); // ...........Redirect to directeur page
+                } else if ($row['role'] === 'systeembeheer') {
+                    header("Location: ../systeembeheer/systeembeheer-dashboard.php"); // ...Redirect to systeembeheer page
                 }
 
                 exit();

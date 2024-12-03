@@ -4,10 +4,10 @@ session_start();
 
 if (isset($_SESSION['gebruiker_id']) && isset ($_SESSION['user_name'])){
   $activePage = 'dashboard';
-include ('../includes/docent-nav.php') 
+include ('../includes/od-nav.php') 
 ?>
     <div class="container">
-            <h1>Welcome bij het docenten dashboard!</h1>
+            <h1>Welcome bij het Onderdirecteurs dashboard!</h1>
     </div>
     <script>
       // Check the state of the checkbox from localStorage when the page loads

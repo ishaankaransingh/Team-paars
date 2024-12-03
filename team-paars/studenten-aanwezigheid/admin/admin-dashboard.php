@@ -6,7 +6,9 @@ if (isset($_SESSION['gebruiker_id']) && isset ($_SESSION['user_name'])){
   $activePage = 'dashboard';
 include ('../includes/admin-nav.php') 
 ?>
-
+    <div class="container">
+            <h1>Welkom bij het admin dashboard!</h1>
+    </div>
     <script>
       // Check the state of the checkbox from localStorage when the page loads
       document.addEventListener('DOMContentLoaded', function() {
