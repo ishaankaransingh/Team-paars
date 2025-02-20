@@ -2,108 +2,107 @@
 session_start();
 
 if (isset($_SESSION['gebruiker_id']) && isset($_SESSION['user_name'])) {
-    $activePage = 'docenten';
+    $activePage = 'student';
     include('../login/db_connect.php'); // Include your database connection
 
     // Handle the form submission for adding a new docent
     // Handle the form submission for adding a new docent
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['naam'], $_POST['voornaam'], $_POST['geboortedatum'])) {
-        // Get the form data
-        $naam = $_POST['naam'];
-        $voornaam = $_POST['voornaam'];
-        $geboortedatum = $_POST['geboortedatum'];
-        $email = $_POST['email'];
-        $password = $_POST['password']; // Store the password as plain text
-        $role_id = 3; // Assuming role_id for docenten is 3
-        $active = isset($_POST['active']) ? 1 : null; // Check if the active checkbox is checked
-    
-        // Hash the password before storing it
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    
-        // Prepare the SQL statement for inserting into `personen`
-        $stmt1 = $conn->prepare("INSERT INTO personen (naam, voornaam, rol_id, `geboorte_datum`, active) VALUES (?, ?, ?, ?, ?)");
-        if (!$stmt1) {
-            echo "Error preparing statement: " . $conn->error;
-            exit;
-        }
-        $stmt1->bind_param("ssisi", $naam, $voornaam, $role_id, $geboortedatum, $active);
-    
-        // Execute the statement for `personen`
-        if ($stmt1->execute()) {
-            $persoon_id = $stmt1->insert_id;
-    
-            // Prepare the SQL statement for inserting into `tgebruiker`
-            $stmt2 = $conn->prepare("INSERT INTO tgebruiker (email, password, persoon_id) VALUES (?, ?, ?)");
-            if (!$stmt2) {
-                echo "Error preparing statement: " . $conn->error;
-                exit;
-            }
-            $stmt2->bind_param("ssi", $email, $hashed_password, $persoon_id); // Use hashed password here
-    
-            // Execute the statement for `tgebruiker`
-            if ($stmt2->execute()) {
-                // Redirect to the same page to prevent resubmission
-                header("Location: " . $_SERVER['PHP_SELF']);
-                exit();
-            } else {
-                echo "<script>alert('Error: " . $stmt2->error . "');</script>";
-            }
-        } else {
-            echo "<script>alert('Error: " . $stmt1->error . "');</script>";
-        }
-    
-        // Close the statements
-        $stmt1->close();
-        $stmt2->close();
-    }
+      // Get the form data
+      $naam = $_POST['naam'];
+      $voornaam = $_POST['voornaam'];
+      $geboortedatum = $_POST['geboortedatum'];
+      $email = $_POST['email'];
+      $password = $_POST['password']; // Store the password as plain text
+      $role_id = 7; // Assuming role_id for docenten is 3
+      $active = isset($_POST['active']) ? 1 : null; // Check if the active checkbox is checked
+  
+      // Hash the password before storing it
+      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+  
+      // Prepare the SQL statement for inserting into `personen`
+      $stmt1 = $conn->prepare("INSERT INTO personen (naam, voornaam, rol_id, `geboorte_datum`, active) VALUES (?, ?, ?, ?, ?)");
+      if (!$stmt1) {
+          echo "Error preparing statement: " . $conn->error;
+          exit;
+      }
+      $stmt1->bind_param("ssisi", $naam, $voornaam, $role_id, $geboortedatum, $active);
+  
+      // Execute the statement for `personen`
+      if ($stmt1->execute()) {
+          $persoon_id = $stmt1->insert_id;
+  
+          // Prepare the SQL statement for inserting into `tgebruiker`
+          $stmt2 = $conn->prepare("INSERT INTO tgebruiker (email, password, persoon_id) VALUES (?, ?, ?)");
+          if (!$stmt2) {
+              echo "Error preparing statement: " . $conn->error;
+              exit;
+          }
+          $stmt2->bind_param("ssi", $email, $hashed_password, $persoon_id); // Use hashed password here
+  
+          // Execute the statement for `tgebruiker`
+          if ($stmt2->execute()) {
+              // Redirect to the same page to prevent resubmission
+              header("Location: " . $_SERVER['PHP_SELF']);
+              exit();
+          } else {
+              echo "<script>alert('Error: " . $stmt2->error . "');</script>";
+          }
+      } else {
+          echo "<script>alert('Error: " . $stmt1->error . "');</script>";
+      }
+  
+      // Close the statements
+      $stmt1->close();
+      $stmt2->close();
+  }
 // Handle the form submission for updating a docent
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_id'])) {
-    // Get the form data for updating
-    $update_id = $_POST['update_id'];
-    $update_voornaam = $_POST['update_voornaam']; // Get voornaam
-    $update_naam = $_POST['update_naam']; // Get naam
-    $update_email = $_POST['update_email'];
-    $update_password = $_POST['update_password']; // Get password
-    $update_active = isset($_POST['update_active']) ? 1 : null; // Check if the active checkbox is checked
+  // Get the form data for updating
+  $update_id = $_POST['update_id'];
+  $update_voornaam = $_POST['update_voornaam']; // Get voornaam
+  $update_naam = $_POST['update_naam']; // Get naam
+  $update_email = $_POST['update_email'];
+  $update_password = $_POST['update_password']; // Get password
+  $update_active = isset($_POST['update_active']) ? 1 : null; // Check if the active checkbox is checked
 
-    // Prepare the SQL statement for updating tgebruiker
-    if (!empty($update_password)) {
-        // Hash the password if it's provided
-        $hashed_password = password_hash($update_password, PASSWORD_DEFAULT);
-    } else {
-        // If no new password is provided, fetch the existing password from the database
-        $existing_user_query = $conn->prepare("SELECT password FROM tgebruiker WHERE persoon_id = ?");
-        $existing_user_query->bind_param("i", $update_id);
-        $existing_user_query->execute();
-        $result = $existing_user_query->get_result();
-        $existing_user = $result->fetch_assoc();
-        $hashed_password = $existing_user['password']; // Use the existing password
-    }
+  // Prepare the SQL statement for updating tgebruiker
+  if (!empty($update_password)) {
+      // Hash the password if it's provided
+      $hashed_password = password_hash($update_password, PASSWORD_DEFAULT);
+  } else {
+      // If no new password is provided, fetch the existing password from the database
+      $existing_user_query = $conn->prepare("SELECT password FROM tgebruiker WHERE persoon_id = ?");
+      $existing_user_query->bind_param("i", $update_id);
+      $existing_user_query->execute();
+      $result = $existing_user_query->get_result();
+      $existing_user = $result->fetch_assoc();
+      $hashed_password = $existing_user['password']; // Use the existing password
+  }
 
-    // Update the user information
-    $stmt = $conn->prepare("UPDATE tgebruiker SET email = ?, password = ? WHERE persoon_id = ?");
-    $stmt->bind_param("ssi", $update_email, $hashed_password, $update_id);
+  // Update the user information
+  $stmt = $conn->prepare("UPDATE tgebruiker SET email = ?, password = ? WHERE persoon_id = ?");
+  $stmt->bind_param("ssi", $update_email, $hashed_password, $update_id);
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        // Prepare the SQL statement for updating personen
-        $stmt = $conn->prepare("UPDATE personen SET naam = ?, voornaam = ?, active = ? WHERE persoon_id = ?");
-        $stmt->bind_param("ssii", $update_naam, $update_voornaam, $update_active, $update_id);
-        if ($stmt->execute()) {
-            // Redirect to the same page to prevent resubmission
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
-        } else {
-            echo "<script>alert('Error: " . $stmt->error . "');</script>";
-        }
-    } else {
-        echo "<script>alert('Error: " . $stmt->error . "');</script>";
-    }
+  // Execute the statement
+  if ($stmt->execute()) {
+      // Prepare the SQL statement for updating personen
+      $stmt = $conn->prepare("UPDATE personen SET naam = ?, voornaam = ?, active = ? WHERE persoon_id = ?");
+      $stmt->bind_param("ssii", $update_naam, $update_voornaam, $update_active, $update_id);
+      if ($stmt->execute()) {
+          // Redirect to the same page to prevent resubmission
+          header("Location: " . $_SERVER['PHP_SELF']);
+          exit();
+      } else {
+          echo "<script>alert('Error: " . $stmt->error . "');</script>";
+      }
+  } else {
+      echo "<script>alert('Error: " . $stmt->error . "');</script>";
+  }
 
-    // Close the statement
-    $stmt->close();
+  // Close the statement
+  $stmt->close();
 }
-
 
   
 
@@ -153,15 +152,15 @@ if (isset($_SESSION['gebruiker_id']) && isset($_SESSION['user_name'])) {
 }
 
 // Fetch total docenten count
-$totalDocentenResult = $conn->query("SELECT COUNT(*) as total FROM personen WHERE rol_id = 3");
-$totalDocenten = $totalDocentenResult->fetch_assoc()['total'];
+$totalsysteembeheerResult = $conn->query("SELECT COUNT(*) as total FROM personen WHERE rol_id = 7");
+$totalsysteembeheer = $totalsysteembeheerResult->fetch_assoc()['total'];
 
 // Fetch online docenten count
-$onlineDocentenResult = $conn->query("SELECT COUNT(*) as online FROM personen WHERE rol_id = 3 AND active = 1");
-$onlineDocenten = $onlineDocentenResult->fetch_assoc()['online'];
+$onlinesysteembeheerResult = $conn->query("SELECT COUNT(*) as online FROM personen WHERE rol_id = 7 AND active = 1");
+$onlinesysteembeheer = $onlinesysteembeheerResult->fetch_assoc()['online'];
 
 // Fetch offline docenten count
-$offlineDocenten = $totalDocenten - $onlineDocenten;
+$offlinesysteembeheer= $totalsysteembeheer - $onlinesysteembeheer;
 
 ?>
 <!DOCTYPE html>
@@ -169,7 +168,7 @@ $offlineDocenten = $totalDocenten - $onlineDocenten;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docenten Management</title>
+    <title>Systeembeheer Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
        /* Reset en basisstijlen */
@@ -211,7 +210,6 @@ body {
 #togglePassword:hover i {
     color: #333; /* Darker icon color on hover */
 }
-
 
 
 
@@ -528,7 +526,7 @@ tr:hover {
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Sidebar -->
+ <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
     <header>Admin Menu</header>
     <a href="admin-dashboard.php" class="<?= ($activePage == 'dashboard') ? 'active' : ''; ?>">
@@ -564,20 +562,19 @@ tr:hover {
         <span>Log out</span>
     </a>
 </div>
-
     <!-- Main Content -->
    
 
         <div class="main-content">
-    <h1 class="dashboard-title">Docent Management</h1>
+    <h1 class="dashboard-title">Systeembeheer Management</h1>
 
    
 
 
 
-        <button class="btn" id="addDocentBtn">Add Docent</button>
+        <button class="btn" id="addDocentBtn">Add systeembeheer</button>
 
-        <!-- Docent Table -->
+       <!-- Docent Table -->
 <table>
     <thead>
         <tr>
@@ -591,54 +588,49 @@ tr:hover {
     <tbody id="docentTableBody">
     <?php
 // Fetch all docenten from the database
-$result = $conn->query("SELECT p.persoon_id, p.naam, p.voornaam, t.email, t.password, p.active FROM personen p JOIN tgebruiker t ON p.persoon_id = t.persoon_id WHERE p.rol_id = 3");
-while ($docent = $result->fetch_assoc()) {
+$result = $conn->query("SELECT p.persoon_id, p.naam, p.voornaam, t.email, t.password, p.active FROM personen p JOIN tgebruiker t ON p.persoon_id = t.persoon_id WHERE p.rol_id = 7");
+while ($systeembeheer = $result->fetch_assoc()) {
     // Determine the status for the light indicator
-    $statusClass = $docent['active'] ? 'green' : 'red'; // 'green' for online, 'red' for offline
+    $statusClass = $systeembeheer['active'] ? 'green' : 'red'; // 'green' for online, 'red' for offline
     echo "<tr>
-        <td>{$docent['naam']}</td>
-        <td>{$docent['voornaam']}</td>
-        <td>{$docent['email']}</td>
+        <td>{$systeembeheer['naam']}</td>
+        <td>{$systeembeheer['voornaam']}</td>
+        <td>{$systeembeheer['email']}</td>
         <td>
-            <span class='light $statusClass'></span> " . ($docent['active'] ? 'Yes' : 'No') . "
+            <span class='light $statusClass'></span> " . ($systeembeheer['active'] ? 'Yes' : 'No') . "
         </td>
         <td>
-            <button class='btn' onclick='openUpdateModal({$docent['persoon_id']}, \"{$docent['naam']}\", \"{$docent['voornaam']}\", \"{$docent['email']}\", \"{$docent['password']}\", {$docent['active']})'>Update</button>
+            <button class='btn' onclick='openUpdateModal({$systeembeheer['persoon_id']}, \"{$systeembeheer['naam']}\", \"{$systeembeheer['voornaam']}\", \"{$systeembeheer['email']}\", \"{$systeembeheer['password']}\", {$systeembeheer['active']})'>Update</button>
             <form method='POST' style='display:inline;'>
-                <input type='hidden' name='delete_id' value='{$docent['persoon_id']}'>
-                <button type='submit' class='btn' onclick=\"return confirm('Are you sure you want to delete this docent?');\">Delete</button>
+                <input type='hidden' name='delete_id' value='{$systeembeheer['persoon_id']}'>
+                <button type='submit' class='btn' onclick=\"return confirm('Are you sure you want to delete this systeembeheer?');\">Delete</button>
             </form>
         </td>
     </tr>";
 }
 ?>
     </tbody>
-
-
-
-
-
 </table>
 
         <div class="card-container" style="display: flex; justify-content: space-around; margin-top: 20px;">
     <div class="card">
-        <h3>Total Docenten</h3>
-        <p><?php echo $totalDocenten; ?></p>
+        <h3>Total systeembeheer</h3>
+        <p><?php echo $totalsysteembeheer; ?></p>
     </div>
     <div class="card">
-        <h3>Online Docenten</h3>
-        <p><?php echo $onlineDocenten; ?></p>
+        <h3>Online systeembeheer</h3>
+        <p><?php echo $onlinesysteembeheer; ?></p>
     </div>
     <div class="card">
-        <h3>Offline Docenten</h3>
-        <p><?php echo $offlineDocenten; ?></p>
+        <h3>Offline systeembeheer</h3>
+        <p><?php echo $offlinesysteembeheer; ?></p>
     </div>
 </div>
 
     <div id="addDocentModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeAddModal">&times;</span>
-        <h2 class="modal-title">Add Docent</h2>
+        <h2 class="modal-title">Add systeembeheer</h2>
         <div class="form-container">
             <form id="addDocentForm" method="POST">
                 <div class="input-group">
@@ -665,18 +657,16 @@ while ($docent = $result->fetch_assoc()) {
                     <label for="active">Active:</label>
                     <input type="checkbox" name="active" checked>
                 </div>
-                <button type="submit" class="btn">Add Docent</button>
+                <button type="submit" class="btn">Add Systeembeheerder</button>
             </form>
         </div>
     </div>
 </div>
 
-  <!-- Update Docent Modal -->
-<!-- Update Docent Modal -->
 <div id="updateDocentModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeUpdateModal">&times;</span>
-        <h2 class="modal-title">Update Docent</h2>
+        <h2 class="modal-title">Update systeembeheer</h2>
         <div class="form-container">
             <form id="updateDocentForm" method="POST">
                 <input type="hidden" name="update_id" id="update_id">
@@ -705,12 +695,11 @@ while ($docent = $result->fetch_assoc()) {
                     <label for="update_active">Active:</label>
                     <input type="checkbox" name="update_active" id="update_active">
                 </div>
-                <button type="submit" class="btn">Update Docent</button>
+                <button type="submit" class="btn">Update Systeembeheer</button>
             </form>
         </div>
     </div>
 </div>
-
 
     <script>
         // Sidebar toggle functionality
@@ -739,14 +728,13 @@ while ($docent = $result->fetch_assoc()) {
         document.getElementById('addDocentBtn').onclick = () => {
             addDocentModal.style.display = "block";
         }
-
-    function openUpdateModal(id, naam, voornaam, email, password, active) {
+        function openUpdateModal(id, naam, voornaam, email, password, active) {
     // Set the values in the modal form
     document.getElementById('update_id').value = id;
     document.getElementById('update_voornaam').value = voornaam; // Set voornaam
     document.getElementById('update_naam').value = naam; // Set naam
     document.getElementById('update_email').value = email;
-    document.getElementById('update_password').value = password; // Set original password
+    document.getElementById('update_password').value = password; // Set password
     document.getElementById('update_active').checked = active;
 
     // Display the modal
@@ -769,6 +757,7 @@ document.getElementById('togglePassword').addEventListener('click', function () 
         icon.classList.add('fa-eye'); // Change icon back to "eye"
     }
 });
+
 
         // Close modal when clicking outside of it
         window.onclick = function(event) {

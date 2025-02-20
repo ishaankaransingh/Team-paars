@@ -14,7 +14,7 @@ if (isset($_SESSION['gebruiker_id']) && isset($_SESSION['user_name'])) {
         $geboortedatum = $_POST['geboortedatum'];
         $email = $_POST['email'];
         $password = $_POST['password']; // Store the password as plain text
-        $role_id = 3; // Assuming role_id for docenten is 3
+        $role_id = 5; // Assuming role_id for docenten is 3
         $active = isset($_POST['active']) ? 1 : null; // Check if the active checkbox is checked
     
         // Hash the password before storing it
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_id'])) {
     $update_naam = $_POST['update_naam']; // Get naam
     $update_email = $_POST['update_email'];
     $update_password = $_POST['update_password']; // Get password
-    $update_active = isset($_POST['update_active']) ? 1 : null; // Check if the active checkbox is checked
+    $update_active = isset($_POST['update_active']) ? 1 : 0; // Check if the active checkbox is checked
 
     // Prepare the SQL statement for updating tgebruiker
     if (!empty($update_password)) {
@@ -153,15 +153,15 @@ if (isset($_SESSION['gebruiker_id']) && isset($_SESSION['user_name'])) {
 }
 
 // Fetch total docenten count
-$totalDocentenResult = $conn->query("SELECT COUNT(*) as total FROM personen WHERE rol_id = 3");
-$totalDocenten = $totalDocentenResult->fetch_assoc()['total'];
+$totalodResult = $conn->query("SELECT COUNT(*) as total FROM personen WHERE rol_id = 5");
+$totalod = $totalodResult->fetch_assoc()['total'];
 
 // Fetch online docenten count
-$onlineDocentenResult = $conn->query("SELECT COUNT(*) as online FROM personen WHERE rol_id = 3 AND active = 1");
-$onlineDocenten = $onlineDocentenResult->fetch_assoc()['online'];
+$onlineodResult = $conn->query("SELECT COUNT(*) as online FROM personen WHERE rol_id = 5 AND active = 1");
+$onlineod = $onlineodResult->fetch_assoc()['online'];
 
 // Fetch offline docenten count
-$offlineDocenten = $totalDocenten - $onlineDocenten;
+$offlineod = $totalod - $onlineod;
 
 ?>
 <!DOCTYPE html>
@@ -528,7 +528,7 @@ tr:hover {
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Sidebar -->
+   <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
     <header>Admin Menu</header>
     <a href="admin-dashboard.php" class="<?= ($activePage == 'dashboard') ? 'active' : ''; ?>">
@@ -564,18 +564,17 @@ tr:hover {
         <span>Log out</span>
     </a>
 </div>
-
     <!-- Main Content -->
    
 
         <div class="main-content">
-    <h1 class="dashboard-title">Docent Management</h1>
+    <h1 class="dashboard-title">Onderdirecteur Management</h1>
 
    
 
 
 
-        <button class="btn" id="addDocentBtn">Add Docent</button>
+        <button class="btn" id="addDocentBtn">Add Onderdirecteur</button>
 
         <!-- Docent Table -->
 <table>
@@ -591,21 +590,21 @@ tr:hover {
     <tbody id="docentTableBody">
     <?php
 // Fetch all docenten from the database
-$result = $conn->query("SELECT p.persoon_id, p.naam, p.voornaam, t.email, t.password, p.active FROM personen p JOIN tgebruiker t ON p.persoon_id = t.persoon_id WHERE p.rol_id = 3");
-while ($docent = $result->fetch_assoc()) {
+$result = $conn->query("SELECT p.persoon_id, p.naam, p.voornaam, t.email, t.password, p.active FROM personen p JOIN tgebruiker t ON p.persoon_id = t.persoon_id WHERE p.rol_id = 5");
+while ($od = $result->fetch_assoc()) {
     // Determine the status for the light indicator
-    $statusClass = $docent['active'] ? 'green' : 'red'; // 'green' for online, 'red' for offline
+    $statusClass = $od['active'] ? 'green' : 'red'; // 'green' for online, 'red' for offline
     echo "<tr>
-        <td>{$docent['naam']}</td>
-        <td>{$docent['voornaam']}</td>
-        <td>{$docent['email']}</td>
+        <td>{$od['naam']}</td>
+        <td>{$od['voornaam']}</td>
+        <td>{$od['email']}</td>
         <td>
-            <span class='light $statusClass'></span> " . ($docent['active'] ? 'Yes' : 'No') . "
+            <span class='light $statusClass'></span> " . ($od['active'] ? 'Yes' : 'No') . "
         </td>
         <td>
-            <button class='btn' onclick='openUpdateModal({$docent['persoon_id']}, \"{$docent['naam']}\", \"{$docent['voornaam']}\", \"{$docent['email']}\", \"{$docent['password']}\", {$docent['active']})'>Update</button>
+            <button class='btn' onclick='openUpdateModal({$od['persoon_id']}, \"{$od['naam']}\", \"{$od['voornaam']}\", \"{$od['email']}\", \"{$od['password']}\", {$od['active']})'>Update</button>
             <form method='POST' style='display:inline;'>
-                <input type='hidden' name='delete_id' value='{$docent['persoon_id']}'>
+                <input type='hidden' name='delete_id' value='{$od['persoon_id']}'>
                 <button type='submit' class='btn' onclick=\"return confirm('Are you sure you want to delete this docent?');\">Delete</button>
             </form>
         </td>
@@ -622,23 +621,23 @@ while ($docent = $result->fetch_assoc()) {
 
         <div class="card-container" style="display: flex; justify-content: space-around; margin-top: 20px;">
     <div class="card">
-        <h3>Total Docenten</h3>
-        <p><?php echo $totalDocenten; ?></p>
+        <h3>Total Onderdirecteur</h3>
+        <p><?php echo $totalod; ?></p>
     </div>
     <div class="card">
-        <h3>Online Docenten</h3>
-        <p><?php echo $onlineDocenten; ?></p>
+        <h3>Online Onderdirecteur</h3>
+        <p><?php echo $onlineod; ?></p>
     </div>
     <div class="card">
-        <h3>Offline Docenten</h3>
-        <p><?php echo $offlineDocenten; ?></p>
+        <h3>Offline Onderdirecteur</h3>
+        <p><?php echo $offlineod; ?></p>
     </div>
 </div>
 
     <div id="addDocentModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeAddModal">&times;</span>
-        <h2 class="modal-title">Add Docent</h2>
+        <h2 class="modal-title">Add Onderdirecteur</h2>
         <div class="form-container">
             <form id="addDocentForm" method="POST">
                 <div class="input-group">
@@ -665,7 +664,7 @@ while ($docent = $result->fetch_assoc()) {
                     <label for="active">Active:</label>
                     <input type="checkbox" name="active" checked>
                 </div>
-                <button type="submit" class="btn">Add Docent</button>
+                <button type="submit" class="btn">Add Onderdirecteur</button>
             </form>
         </div>
     </div>
@@ -676,7 +675,7 @@ while ($docent = $result->fetch_assoc()) {
 <div id="updateDocentModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeUpdateModal">&times;</span>
-        <h2 class="modal-title">Update Docent</h2>
+        <h2 class="modal-title">Update Onderdirecteur</h2>
         <div class="form-container">
             <form id="updateDocentForm" method="POST">
                 <input type="hidden" name="update_id" id="update_id">
@@ -705,7 +704,7 @@ while ($docent = $result->fetch_assoc()) {
                     <label for="update_active">Active:</label>
                     <input type="checkbox" name="update_active" id="update_active">
                 </div>
-                <button type="submit" class="btn">Update Docent</button>
+                <button type="submit" class="btn">Update Onderdirecteur</button>
             </form>
         </div>
     </div>

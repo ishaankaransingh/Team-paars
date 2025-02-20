@@ -72,8 +72,8 @@ $conn->close();
             display: flex;
         }
 
-        /* Sidebar */
-        .sidebar {
+       /* Sidebar */
+       .sidebar {
             width: 250px;
             height: 100vh;
             background: rgba(30, 30, 47, 0.9);
@@ -137,16 +137,22 @@ $conn->close();
                 transform: translateX(0);
             }
 
+
+
+        }
+    
+
             .main-content {
                 margin-left: 0;
             }
-        }
+        
 
         /* Main content */
         .main-content {
             margin-left: 250px;
             padding: 20px;
             transition: margin 0.3s ease;
+            flex-grow: 1;
         }
 
         @media (max-width: 768px) {
@@ -186,7 +192,6 @@ $conn->close();
 
         /* Schedule Container */
         .schedule-container {
-            display: none;
             margin-top: 20px;
             background: rgba(30, 30, 47, 0.9);
             backdrop-filter: blur(20px);
@@ -200,6 +205,7 @@ $conn->close();
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            overflow-x: auto;
         }
 
         table, th, td {
@@ -272,30 +278,9 @@ $conn->close();
         </a>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
-        <h1 class="dashboard-title">Docenten Dashboard</h1>
-        <div class="welcome-text">Welcome, <?php echo htmlspecialchars($voornaam . ' ' . $naam); ?>!</div>
-
-        <!-- Cards Section -->
-        <div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
-            <div class="card">
-                <h3>Upcoming Classes</h3>
-                <p>Check your upcoming classes and prepare accordingly.</p>
-            </div>
-            <div class="card">
-                <h3>Announcements</h3>
-                <p>Stay updated with the latest announcements from the school.</p>
-            </div>
-            <div class="card">
-                <h3>Resources</h3>
-                <p>Access teaching resources and materials for your classes.</p>
-            </div>
-        </div>
-
-        <!-- Schedule Section -->
-        <div class="schedule-container" id="scheduleContainer">
-            <h2>Your Schedule</h2>
+        <h1 class="dashboard-title">Your Schedule</h1>
+        <div class="schedule-container">
             <table>
                 <tr>
                     <th>Dag</th>
@@ -319,38 +304,16 @@ $conn->close();
                 <?php endwhile; ?>
             </table>
         </div>
-
-        <div class="footer">
-            <p>&copy; 2099 Quantum Admin System</p>
-        </div>
     </div>
 
+   
+
     <script>
-        // Sidebar toggle functionality
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.getElementById('sidebar');
-        const scheduleContainer = document.getElementById('scheduleContainer');
 
         sidebarToggle.addEventListener('click', () => {
             sidebar.classList.toggle('open');
-        });
-
-        // Show schedule on button click
-        document.getElementById('scheduleButton').addEventListener('click', () => {
-            scheduleContainer.style.display = scheduleContainer.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Show welcome text on dashboard button click
-        document.getElementById('dashboardButton').addEventListener('click', () => {
-            document.querySelector('.welcome-text').style.display = 'block';
-            scheduleContainer.style.display = 'none'; // Hide schedule when on dashboard
-        });
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', (event) => {
-            if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-                sidebar.classList.remove('open');
-            }
         });
     </script>
 </body>
