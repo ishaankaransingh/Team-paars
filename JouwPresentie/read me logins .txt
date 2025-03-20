@@ -1,0 +1,19 @@
+logins per rol 
+
+PASWORD VAN ALLES IS : 12345
+BEHALVE ADMIN IS : admin 
+
+
+ADMIN : admin@natin.sr
+
+SYSTEEMBEHEERER : systeembeheer@natin.sr
+
+STUDENT : rishika.jainath@natin.student.sr
+
+OD : od@natin.sr
+
+RC : jenna@rc.sr
+
+DIRECTEUR : directeur@natin.sr
+
+DOCENT : master@docent.com
