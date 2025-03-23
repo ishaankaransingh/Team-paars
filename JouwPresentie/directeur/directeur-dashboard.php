@@ -378,6 +378,10 @@ $conn->close();
             <i class="fas fa-clock"></i>
             <span>Periodes</span>
         </a>
+
+        <a href="manage_richtingen.php" class="active"><i class="fas fa-map-signs"></i><span>Richtingen Beheer</span></a>
+
+
         <a href="../login/logout.php">
             <i class="fas fa-sign-out-alt"></i>
             <span>Log out</span>
@@ -472,7 +476,7 @@ $conn->close();
         </div>
 
         <div class="footer">
-            <p>© 2099 Quantum Admin System</p>
+            <p>© 2023 Jouwpresentie Systeem</p>
         </div>
     </div>
 

@@ -249,7 +249,7 @@
     </div>
 
     <div class="footer">
-      <p>© 2099 Quantum Admin System</p>
+      <p>© 2023 Jouwpresntie Systeem/p>
     </div>
   </div>
 

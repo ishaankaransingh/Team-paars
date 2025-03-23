@@ -336,7 +336,7 @@ $conn->close();
         </div>
 
         <div class="footer">
-            <p>© 2099 Quantum Admin System</p>
+            <p>© 2023 Jouwpresentie Systeem</p>
         </div>
     </div>
 

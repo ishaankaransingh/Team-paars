@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 20, 2025 at 05:45 PM
+-- Generation Time: Mar 23, 2025 at 07:40 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -204,7 +204,9 @@ INSERT INTO `presentie` (`presentie_id`, `persoon_id`, `vak_id`, `klas_id`, `sta
 (79, 20, 2, 1, 5, 2, 1, '2025-03-15', 6, 3, 1),
 (103, 17, 5, 4, 1, 2, 1, '2025-03-20', 4, 3, 1),
 (104, 20, 5, 4, 4, 2, 1, '2025-03-20', 4, 3, 1),
-(105, 33, 5, 3, 1, 2, 1, '2025-03-20', 4, 3, 3);
+(105, 33, 5, 3, 1, 2, 1, '2025-03-20', 4, 3, 3),
+(106, 17, 5, 4, 1, 2, 1, '2025-03-23', 7, 3, 1),
+(107, 20, 5, 4, 1, 2, 1, '2025-03-23', 7, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -216,7 +218,7 @@ CREATE TABLE `richting` (
   `Richting_ID` int NOT NULL,
   `Richting` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Complex` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `persoon_id` int NOT NULL
+  `persoon_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -224,9 +226,9 @@ CREATE TABLE `richting` (
 --
 
 INSERT INTO `richting` (`Richting_ID`, `Richting`, `Complex`, `persoon_id`) VALUES
-(3, 'ICT', 'Jagernath Lachmon', 10),
-(4, 'AA', 'Leysweg', 10),
-(5, 'AV', 'Jagernath', 9);
+(3, 'ICT', 'Jagernath Lachmon', NULL),
+(4, 'AA', 'Leysweg', NULL),
+(5, 'AV', 'Jagernath', NULL);
 
 -- --------------------------------------------------------
 
@@ -379,12 +381,12 @@ INSERT INTO `tgebruiker` (`gebruiker_id`, `email`, `password`, `persoon_id`) VAL
 (12, 'rishika.jainath@natin.student.sr', '$2y$10$eCXv4sYOyETojPAIpF.YcOS.yPH9ieNAby9UnCrTLeIzWY1AEQJfy', 10),
 (13, 'admin@natin.sr', '$2y$10$xcd1zg3YFdwlSnTwyi18TujEwkvWNfNdkM.XoZYIhGLCeLV5U3b3e', 11),
 (17, 'jenna@rc.sr', '$2y$10$Ty2IWIEHXu90wVLRlrDTue2oP/kAhXtyb6b2yJ6oe32SwJtyU6/ha', 15),
-(19, 'shivam@natin.sr', '$2y$10$68/LLPSZBNN7vDX1z.286uy4G1jhPEA6n6Bn/NfTV/hf3kPFwgrM2', 18),
+(19, 'shivam@natin.sr', '$2y$10$Z.u6Sc3/1ZzfNmt8xOrbL.dJ47JMVHljIdqFQGRrr6/3H9FHSk6ke', 18),
 (20, 'shiven@student.natin.sr', '$2y$10$Luj1J/ifRGrTnevBjlpwMutDowFGBNUCHjvhjIq7CHTdtPu8NEEOO', 19),
-(21, 'chivar@natin.stud.sr', '$2y$10$uAPvrQuxyd5AMo8qPGQpG.tC3hfeL2Ur8Pi8RdGRfftycD3LI4Hp2', 20),
+(21, 'chivar@natin.stud.sr', '$2y$10$cBERnWSZSg.wu9dbHUZjY.tKGMizt8tTm/ZEhrjF4ospcHVFP8cGe', 20),
 (22, 'isha@natin.stud.sr', '$2y$10$zysUH/wWIxKB7r.bCqkH0u9sPA2IJNAtP15JvxQFz3b0r/kCGSeo2', 21),
 (28, 'directeur@natin.sr', '$2y$10$/z6UjGGayJJqdRP71JxMp.XN/apBxHw/Fcky60nGp3RtMiwuCPcMC', 27),
-(29, 'od@gmail.com', '$2y$10$...GhaXhs75Ou2LRBPblXeIzn54pQ8OGNiXX8m3SgyA.lcHg37VHe', 28),
+(29, 'od@natin.sr', '$2y$10$...GhaXhs75Ou2LRBPblXeIzn54pQ8OGNiXX8m3SgyA.lcHg37VHe', 28),
 (30, 'systeembeheer@natin.sr', '$2y$10$yc.HbVxpglcxKBo65tCP1ubKnJiott9zTiC/gUbrcj9Jq1ASx05wO', 29),
 (31, 'tester@gmail.com', '$2y$10$iAQjIAkGwX9Zz7hKj1ubuupJYeoBOy7STW48KkpN6XcxMEJjP6GW.', 30),
 (34, 'vijay.sewradj@natin.sr', '$2y$10$pB.vzIPo/FKbhgR4TxFglO.E.J1Fg/lem9n05OHniHcj8GadhWpMG', 33),
@@ -575,13 +577,13 @@ ALTER TABLE `personen`
 -- AUTO_INCREMENT for table `presentie`
 --
 ALTER TABLE `presentie`
-  MODIFY `presentie_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `presentie_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `richting`
 --
 ALTER TABLE `richting`
-  MODIFY `Richting_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Richting_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `rooster`

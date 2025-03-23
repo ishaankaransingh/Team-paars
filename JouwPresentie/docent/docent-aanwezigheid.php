@@ -487,7 +487,7 @@ $stmt_rooster->close();
 
         <!-- Footer -->
         <div class="footer">
-            <p>&copy; 2023 jouwpresentie systeem</p>
+            <p>&copy; © 2023 Jouwpresentie Systeem</p>
         </div>
     </div>
 
